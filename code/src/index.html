@@ -1,0 +1,84 @@
+<html>
+<head>
+	<title>Backbone Router Example</title>
+
+</head>
+<body>
+
+<script src="libs/require/require.js"></script>
+<script src="libs/log4javascript/log4javascript_uncompressed.js"></script>
+
+<div id="content">Loading...</div>
+
+<script>
+
+	// setup logging
+	var logger = log4javascript.getLogger("RouterExample");
+	logger.setLevel(log4javascript.Level.ALL);
+	logger.addAppender(new log4javascript.BrowserConsoleAppender());
+	window.logger = logger;
+	logger.debug("index.html::log4javascript ready to rock.");
+
+	// configure require
+	require.config({
+		baseUrl: "./",
+		optimize: "uglify",
+		waitSeconds: 10,
+		packages: [
+			{
+				name: "jquery",
+				location: "./libs/jquery",
+				main: "jquery"
+			},
+			{
+				name: "json2",
+				location: "./libs/json2",
+				main: "json2"
+			},
+			{
+				name: "underscore",
+				location: "./libs/underscore",
+				main: "underscore"
+			},
+			{
+				name: "backbone",
+				location: "./libs/backbone",
+				main: "backbone"
+			}
+		]
+	});
+
+	// start this mug
+	// NOTE: I could use the order plugin for require since Backbone needs underscore,
+	// but for now I'll just load it first.
+	require(["underscore"], function()
+	{
+		require(["com/jessewarden/routerexample/RouterExample"], function(RouterExample)
+		{
+			var example = new RouterExample();
+		});
+	});
+	
+	
+	
+
+	/*
+	require(["underscore"], function(_)
+	{
+		logger.debug("underscore: ", _);
+	});
+	*/
+	/*
+	require(["backbone"], function(Backbone)
+	{
+		logger.debug("Backbone: ", Backbone);
+	});
+	*/
+	
+
+
+
+</script>
+
+</body>
+</html>
